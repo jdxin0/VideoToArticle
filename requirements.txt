@@ -1,0 +1,6 @@
+openai-whisper
+transformers
+sentencepiece
+accelerate
+yt-dlp
+webvtt-py
