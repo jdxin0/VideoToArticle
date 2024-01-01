@@ -17,7 +17,7 @@ WHISPER_MODEL = 'large-v3'
 LLM_MODEL = 'THUDM/chatglm3-6b-32k'
 LLM_PROMPT = {
     'zh': '请给以下面的内容添加标点符号，修改错别字，并且按语义进行分段： ',
-    'en': 'Please add punctuation to the content below, modify the wrong words, and perform segments according to semantics: '
+    'en': 'Please add punctuation to the content below, modify the wrong words, and divided into paragraphs according to semantics: '
 }
 LLM_LENGTH = 20000
 
