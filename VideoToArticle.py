@@ -4,6 +4,7 @@ import sys
 import glob
 import regex
 import base64
+import string
 import subprocess
 import multiprocessing
 
@@ -20,6 +21,9 @@ LLM_PROMPT = {
     'en': 'Please add punctuation to the content below, modify the wrong words, and divided into paragraphs according to semantics: '
 }
 LLM_LENGTH = 20000
+
+SEG_REMOVED_CHARS = string.punctuation + '\n\t，。！《》‘’“”'
+SEG_TRNASLATOR = str.maketrans(SEG_REMOVED_CHARS, ' '*len(SEG_REMOVED_CHARS))
 
 
 def run_cmd_with_list(cmd):
@@ -112,9 +116,8 @@ def convert_text_to_article(segs):
     while ix < len(segs):
         seg_raw = ''
         while ix < len(segs) and (len(seg_raw) + len(segs[ix]) < LLM_LENGTH or len(seg_raw) == 0):
-            seg_raw += ' ' + segs[ix]
+            seg_raw += ' ' + segs[ix].translate(SEG_TRNASLATOR)
             ix += 1
-
         current_length = 0
         for response, history in model.stream_chat(tokenizer, prompt+seg_raw, history=[], top_p=1, temperature=0.01):
             print(response[current_length:], end="", flush=True)
